@@ -1,7 +1,7 @@
 package helpers
 
 import (
-    "strings"
+    //"strings"
     "fmt"
 )
 
@@ -10,14 +10,15 @@ type FlagPair struct {
     value string
 }
 
-func ParseInput(monoOps []string, flagOps []string, usrString string) ([]FlagPair, bool) {
+func ParseInput(monoOps []string, flagOps []string, stringList []string) ([]FlagPair, bool) {
     var flagList []FlagPair
     newBit := []byte("-")[0]
     monoParity := false
-    stringList := strings.Split(usrString, " ")
 
     // This just removes the first two items <pack> and <fn>
-    stringList = stringList[2:]
+    // Don't think I'll use these
+    // stringList := strings.Split(usrString, " ")
+    // stringList = stringList[2:]
 
     // If there are no flags, then just return the empty list
     if len(stringList) == 0 {
@@ -40,7 +41,7 @@ func ParseInput(monoOps []string, flagOps []string, usrString string) ([]FlagPai
                 monoParity = true
                 continue
             }
-            fmt.Printf("Error ++ Invalid Mono-Op Flag\n")
+            fmt.Printf("%s\n", PrintColor("bold", "red", "none", "| ERROR ++ Invalid Mono-Op Flag |"))
             return flagList, false
         }
     }
@@ -54,31 +55,33 @@ func ParseInput(monoOps []string, flagOps []string, usrString string) ([]FlagPai
     }
     for k,v := range stringList {
         v := string(v)
-        fmt.Printf("%v\n", v)
+        //fmt.Printf("%v\n", v)
         if v[0] == newBit && v[1] != newBit {
-            fmt.Printf("Error ++ Invalid Argument Flag Prefix\n")
+            fmt.Printf("%s\n", PrintColor("bold", "red", "none", "| ERROR ++ Invalid Argument Flag Prefix |"))
             return flagList, false
         }
         if len(v) == 1 {
-            tempVar.value += " "+v
+            tempVar.value += v+" "
             continue
         }
         if v[0:2] == "--" {
             if k != 0 {
+                tempVar.value = tempVar.value[:len(tempVar.value)-1]
                 flagList = append(flagList, tempVar)
             }
             if IsStrIn(v[2:len(v)], flagOps) {
                 tempVar = FlagPair{
-                    flag: v[1:len(v)],
+                    flag: v[2:len(v)],
                     value: "",
                 }
                 continue
             }
-            fmt.Printf("Error ++ Invalid Argument Flag\n")
+            fmt.Printf("%s\n", PrintColor("bold", "red", "none", "| ERROR ++ Invalid Argument Flag |"))
             return flagList, false
         }
-        tempVar.value += " "+v 
+        tempVar.value += v+" " 
     }
+    tempVar.value = tempVar.value[:len(tempVar.value)-1]
     flagList = append(flagList, tempVar)
     return flagList, true
 }
