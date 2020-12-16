@@ -24,7 +24,10 @@ func main() {
     usrString, _ = reader.ReadString('\n')
     usrString = usrString[:len(usrString)-1]
     for strings.ToLower(usrString) != "quit" {
-        stringList = strings.Split(usrString, " ") 
+        stringList = strings.Split(usrString, " ")
+        if len(stringList) == 0 {
+            continue
+        }
         switch stringList[0] {
         case "clear":
             helpers.ClearTerm()
@@ -33,7 +36,7 @@ func main() {
             crack.CrackStart(stringList[1:])
             break
         case "crypto":
-            crypto.CryptoStart(stringList[1:])
+            crypto.CryptoInit()
             break
         case "exit":
             errorVar := helpers.PrintColor("bold", "purple", "none", "| ERROR ++ Did you mean quit? |")

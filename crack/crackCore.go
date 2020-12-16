@@ -7,6 +7,9 @@ import (
 
 func CrackStart(inputItems []string) {
     var fn string
+    if len(inputItems) == 0 {
+        return
+    }
     fn = inputItems[0]
     switch fn {
     case "md5":

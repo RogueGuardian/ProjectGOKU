@@ -15,11 +15,6 @@ func ParseInput(monoOps []string, flagOps []string, stringList []string) ([]Flag
     newBit := []byte("-")[0]
     monoParity := false
 
-    // This just removes the first two items <pack> and <fn>
-    // Don't think I'll use these
-    // stringList := strings.Split(usrString, " ")
-    // stringList = stringList[2:]
-
     // If there are no flags, then just return the empty list
     if len(stringList) == 0 {
         return flagList, true
@@ -48,7 +43,7 @@ func ParseInput(monoOps []string, flagOps []string, stringList []string) ([]Flag
     if len(stringList) == 1 {
         return flagList, true
     }
-    
+
     var tempVar FlagPair
     if monoParity {
         stringList = stringList[1:]
@@ -79,7 +74,7 @@ func ParseInput(monoOps []string, flagOps []string, stringList []string) ([]Flag
             fmt.Printf("%s\n", PrintColor("bold", "red", "none", "| ERROR ++ Invalid Argument Flag |"))
             return flagList, false
         }
-        tempVar.value += v+" " 
+        tempVar.value += v+" "
     }
     tempVar.value = tempVar.value[:len(tempVar.value)-1]
     flagList = append(flagList, tempVar)

@@ -6,19 +6,24 @@ import (
     "../helpers"
 )
 
+/*
+Input: inputList = List of strings parsed by spaces
+Output: Rotated string in [num] ways
+Return: NA
+*/
 func rotCipher(inputList []string) {
     var monoOps = []string{}
-    var flagOps = []string{"num", "msg"}
+    var flagOps = []string{"num"}
 
-    flagList, err := helpers.ParseInput(monoOps, flagOps, inputList[1:])
+    if len(inputList) == 0 {
+        return
+    }
+
+    flagList, err := helpers.ParseInput(monoOps, flagOps, inputList[:])
     if !err {
         return
     }
-    if !helpers.IsFlagIn("msg", flagList) {
-        fmt.Printf("%s\n", helpers.PrintColor("bold", "red", "none", "ERROR ++ Missing --msg and value"))
-        return
-    }
-    byteList := helpers.GetFlagValue("msg", flagList)
+    byteList := inputList[0]
     if helpers.IsFlagIn("num", flagList) {
         intVal, intErr := strconv.Atoi(helpers.GetFlagValue("num", flagList))
         if intErr != nil {
@@ -33,6 +38,11 @@ func rotCipher(inputList []string) {
     }
 }
 
+/*
+Input: inputStr = Input string to be rotated; rotVal = Value to be rotated by
+Output: Prints the rotated string in a formated way
+Return: NA
+*/
 func baseRot(inputStr string, rotVal int) {
     var newStr string
     var intVal byte
@@ -45,7 +55,7 @@ func baseRot(inputStr string, rotVal int) {
                 }
                 newStr += string(intVal)
                 continue
-            } else if inputStr[bit] >= 'a' && inputStr[bit] <= 'z' { 
+            } else if inputStr[bit] >= 'a' && inputStr[bit] <= 'z' {
                 if intVal < 'a' {
                     intVal += 26
                 }
@@ -60,27 +70,27 @@ func baseRot(inputStr string, rotVal int) {
     }
 }
 
+/*
+Input: inputList = List of string[s] to be atbashed
+Output: Atbash strings printed to the terminal
+Return: NA
+*/
 func atbashCipher(inputList []string) {
-    var monoOps = []string{}
-    var flagOps = []string{"msg"}
-    flagList, err := helpers.ParseInput(monoOps, flagOps, inputList[1:])
-    if !err {
+
+    if len(inputList) == 0 {
         return
     }
-    if !helpers.IsFlagIn("msg", flagList) {
-        fmt.Printf("%s\n", helpers.PrintColor("bold", "red", "none", "ERROR ++ Missing --msg and value"))
-        return
-    }
-    usrStr := helpers.GetFlagValue("msg", flagList) 
+
+    usrStr := inputList[0]
     var newStr string
     for i := range usrStr {
         bit := usrStr[i]
         if bit >= 'A' && bit <= 'Z' {
-           newStr += string('A'+'Z'-bit) 
+           newStr += string('A'+'Z'-bit)
            continue
         }
         if bit >= 'a' && bit <= 'z' {
-           newStr += string('a'+'z'-bit) 
+           newStr += string('a'+'z'-bit)
            continue
         }
         newStr += string(bit)
