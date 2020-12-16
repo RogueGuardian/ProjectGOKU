@@ -20,7 +20,7 @@ func crackMD5(inputList []string) {
         return
     }
     if !helpers.IsFlagIn("hash", flagList) && !helpers.IsFlagIn("file", flagList) {
-        fmt.Printf("%s\n", helpers.PrintColor("bold", "red", "none", "| ERROR ++ No hash location specified |"))
+        fmt.Printf("%s\n", helpers.PrintColor("bold", "red", "none", "| ERROR ++ No hash value or file specified |"))
         return
     }
     if !helpers.IsFlagIn("wordlist", flagList) {
@@ -46,7 +46,7 @@ func crackMD5(inputList []string) {
     for hashScan.Scan() {
         wg.Add(1)
         go func(text string){
-            fmt.Printf("%s\n", md5Hash(text, wordVal)) 
+            fmt.Printf("%s\n", md5Hash(text, wordVal))
             wg.Done()
         }(hashScan.Text())
     }
@@ -86,7 +86,7 @@ func crackSHA1(inputList []string) {
     for hashScan.Scan() {
         wg.Add(1)
         go func(text string){
-            fmt.Printf("%s\n", sha1Hash(text, wordVal)) 
+            fmt.Printf("%s\n", sha1Hash(text, wordVal))
             wg.Done()
         }(hashScan.Text())
     }
@@ -95,7 +95,7 @@ func crackSHA1(inputList []string) {
 }
 
 func sha1Hash(hash string, wordlist string) string {
-    file, err := os.Open(wordlist) 
+    file, err := os.Open(wordlist)
     if err != nil {
         return helpers.PrintColor("bold", "red", "none", "| ERROR ++ Wordlist not valid |")
     }
@@ -112,7 +112,7 @@ func sha1Hash(hash string, wordlist string) string {
 }
 
 func md5Hash(hash string, wordlist string) string {
-    file, err := os.Open(wordlist) 
+    file, err := os.Open(wordlist)
     if err != nil {
         return helpers.PrintColor("bold", "red", "none", "| ERROR ++ Wordlist not valid |")
     }

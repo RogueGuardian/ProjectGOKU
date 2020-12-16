@@ -33,7 +33,7 @@ func main() {
             helpers.ClearTerm()
             break
         case "crack":
-            crack.CrackStart(stringList[1:])
+            crack.CrackInit()
             break
         case "crypto":
             crypto.CryptoInit()
