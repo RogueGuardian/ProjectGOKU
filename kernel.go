@@ -9,6 +9,7 @@ import (
     "./crypto"
     "./gambler"
     "./helpers"
+	"./osint"
 )
 
 func main() {
@@ -32,19 +33,29 @@ func main() {
         case "clear":
             helpers.ClearTerm()
             break
+
         case "crack":
             crack.CrackInit()
             break
+
         case "crypto":
             crypto.CryptoInit()
             break
+
         case "exit":
             errorVar := helpers.PrintColor("bold", "purple", "none", "| ERROR ++ Did you mean quit? |")
             fmt.Printf("%s", errorVar)
             reader.ReadString('\n')
             break
+
         case "gambler":
             gambler.GamblerInit()
+			break
+
+		case "osint":
+			osint.OsintInit()
+			break
+
         default:
             errorVar := helpers.PrintColor("bold", "red", "none", "| ERROR ++ Invalid pack |")
             fmt.Printf("%s", errorVar)
