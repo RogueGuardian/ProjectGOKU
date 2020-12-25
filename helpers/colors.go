@@ -91,8 +91,8 @@ func PrintColor(style string, fg string, bg string, usrString string) string {
         fgInt = -1
         break
     }
-    
-    
+
+
     switch strings.ToLower(bg) {
     case "black":
         bgInt = BLACK

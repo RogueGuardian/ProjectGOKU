@@ -1,7 +1,7 @@
 package osint
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -23,8 +23,8 @@ func getGPSLocation(NS string, EW string) string {
 		return "Invalid Lon Coordinate"
 	}
 
-	// Create format string and do a Get request and recieve data in XML
-	getString := fmt.Sprintf("https://nominatim.openstreetmap.org/reverse?lat=%s&lon=%s&format=xml", NS, EW)
+	// Create format string and do a Get request and recieve data in JSON
+	getString := fmt.Sprintf("https://nominatim.openstreetmap.org/reverse?lat=%s&lon=%s&format=json", NS, EW)
 	resp, err := http.Get(getString)
 	if err != nil {
 		fmt.Printf("<STB> HTTP ERROR")
@@ -37,12 +37,11 @@ func getGPSLocation(NS string, EW string) string {
 		return "NA"
 	}
 
-	// Parse XML into relevant data
-	fmt.Printf(string(loc))
+	// Parse JSON into relevant data
 	parseLoc := geoLocation{}
-	xmlErr := xml.Unmarshal([]byte(loc), &parseLoc)
-	if xmlErr != nil {
-		fmt.Printf("<STB> XML ERROR")
+	jsonErr := json.Unmarshal([]byte(loc), &parseLoc)
+	if jsonErr != nil {
+		fmt.Printf("<STB> JSON ERROR")
 		return "XD"
 	}
 	return parseLoc.toString()
